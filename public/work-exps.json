@@ -1,0 +1,203 @@
+[
+  {
+    "id": 1,
+    "title": "Software Engineer / Team Leader",
+    "company": "Entando",
+    "period": "Apr 2020 - Present",
+    "items": [
+      "Led a cross-functional team with full autonomy to oversee product development from inception to completion",
+      "Developed and maintained a Kubernetes operator responsible for the automated deployment and management of the entire application",
+      "Designed and implemented microservices for package management, facilitating the deployment of user-generated bundles into Kubernetes and the Entando system",
+      "Developed multiple microservices and microfrontends designed to offer a comprehensive set of building blocks for composing applications within the cluster",
+      "Identified and implemented a new CI/CD internal process based on GitHub Actions and Docker"
+    ],
+    "techs": [
+      "Kubernetes",
+      "GCP",
+      "OpenShift",
+      "Terraform",
+      "Docker",
+      "Java",
+      "Go",
+      "Quarkus",
+      "Spring Boot",
+      "GitHub Actions",
+      "Angular",
+      "React",
+      "Javascript",
+      "TypeScript",
+      "Oclif",
+      "Bash",
+      "Keycloak",
+      "MySQL",
+      "PostgreSQL",
+      "NoSQL",
+      "Gradle",
+      "Maven",
+      "API First",
+      "RESTful APIs",
+      "CI/CD",
+      "JHipster",
+      "NodeJs",
+      "Rust",
+      "GraphQL"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Full Stack Software Engineer",
+    "company": "Sourcesense, Rome, IT",
+    "period": "03/2019 – 03/2020",
+    "items": [
+      "Designed and developed a distributed gambling system leveraging microservices architecture",
+      "Successfully implemented Event Sourcing and CQRS",
+      "Utilized RedHat Quarkus for high-performance software development with native Java compilation",
+      "Introduced JavaScript frontend automated tests"
+    ],
+    "techs": [
+      "Kafka",
+      "MongoDB",
+      "Quarkus",
+      "Vert.x",
+      "SaaS",
+      "Spring Boot",
+      "ElasticSearch",
+      "Git",
+      "Javascript",
+      "TypeScript",
+      "Angular",
+      "npm",
+      "MySQL",
+      "Jenkins",
+      "Gitlab"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Full Stack Software Engineer / Technical coordinator",
+    "company": "HBG Connex",
+    "period": "03/2018 – 02/2019",
+    "items": [
+      "Led a team in designing and developing gambling software to automate workflows and enhance production cycles",
+      "Designed, developed, and maintained two Android apps for commercial use",
+      "Enhanced information system security through technology sector modernization",
+      "Streamlined development processes by implementing coordination and documentation tools"
+    ],
+    "techs": [
+      "Spring",
+      "Java",
+      "JUnit",
+      "Mockito",
+      "Android",
+      "Angular",
+      "AngularJs",
+      "HTML5",
+      "CSS3",
+      "SASS2",
+      "npm",
+      "REST API",
+      "Gradle",
+      "Tomcat",
+      "Docker"
+    ]
+  },
+  {
+    "id": 4,
+    "title": "Front End Mobile Developer",
+    "company": "QuiGioco.it",
+    "period": "02/2017 – 02/2018",
+    "items": [
+      "Designed and developed the Quigioco.it online gaming platform in a fully remote team",
+      "Expanded the gambling platform to the mobile audience",
+      "Introduced new technologies for stack modernization",
+      "Optimized performance to enhance the user experience"
+    ],
+    "techs": [
+      "AngularJs",
+      "HTML5",
+      "CSS3",
+      "SASS2",
+      "npm",
+      "Javascript",
+      "PostCSS",
+      "Cross-browsing",
+      "UX",
+      "Responsive Design"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Software Engineer / Technical Coordinator",
+    "company": "Egomnia",
+    "period": "10/2015 – 01/2017",
+    "items": [
+      "Conducted research and developed NFC solutions to enhance loyalty mechanisms",
+      "Designed and developed the Egomnia Android app to facilitate communication between job demand and supply",
+      "Developed a social platform for video streaming in the industry"
+    ],
+    "techs": [
+      "AngularJs",
+      "NodeJs",
+      "MongoDB",
+      "ExpressJs",
+      "JQuery",
+      "Android",
+      "Gradle",
+      "Firebase",
+      "HTML5",
+      "CSS3",
+      "Java",
+      "NFC",
+      "Rest",
+      "PHP"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Mobile Developer",
+    "company": "01Tribe",
+    "period": "11/2013 – 09/2015",
+    "items": [
+      "Developed Android apps to enhance services for Poste Italiane current account holders",
+      "Created the Alitalia Android app, increasing the company's mobile market sales",
+      "Designed and developed the Alitalia mobile site",
+      "Provided back-end support in J2EE"
+    ],
+    "techs": [
+      "Android",
+      "Gradle",
+      "HTML5",
+      "CSS3",
+      "Javascript",
+      "JQuery",
+      "SVN",
+      "J2EE"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Analyst Developer",
+    "company": "TechnoBean",
+    "period": "10/2010 – 10/2013",
+    "items": [
+      "Designed and developed full-stack management web applications in the medical field",
+      "Created statistical software for analyzing patients' lifestyle habits",
+      "Developed plugins and modules for Drupal and Elgg CMS"
+    ],
+    "techs": [
+      "J2EE",
+      "Struts 2",
+      "Hibernate",
+      "MySQL",
+      "HTML",
+      "CSS",
+      "Javascript",
+      "Redmine",
+      "PHP",
+      "Drupal",
+      "Wordpress",
+      "XSLT2",
+      "Tomcat"
+    ]
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Hexagonal architecture in Rust",
+    "link": "https://medium.com/@lucorset/hexagonal-architecture-in-rust-72f8958eb26d"
+  },
+  {
+    "title": "Hexagonal architecture in Rust: the domain",
+    "link": "https://towardsdev.com/hexagonal-architecture-in-rust-the-domain-24e9a9a6f2c4"
+  },
+  {
+    "title": "Hexagonal architecture in Rust: the use cases",
+    "link": "https://towardsdev.com/hexagonal-architecture-in-rust-the-use-cases-7d5a88bd0a4"
+  },
+  {
+    "title": "Hexagonal architecture in Rust: driven adapters",
+    "link": "https://medium.com/towardsdev/hexagonal-architecture-in-rust-driven-adapters-ab02ed335dc5"
+  },
+  {
+    "title": "Hexagonal architecture in Rust: driving adapters",
+    "link": "https://towardsdev.com/hexagonal-architecture-in-rust-driving-adapters-f66f71bb3dd1"
+  },
+  {
+    "title": "Hexagonal architecture in Rust: adapter switching",
+    "link": "https://towardsdev.com/hexagonal-architecture-in-rust-adapter-switching-f4a264ad246f"
+  },
+  {
+    "title": "Hexagonal architecture in Rust: adapter switching - GraphQL",
+    "link": "https://towardsdev.com/hexagonal-architecture-in-rust-driving-adapters-switching-graphql-5bc64b14f03"
+  },
+  {
+    "title": "MemPOI: a library that uses Apache POI to simplify exports from databases to Excel files",
+    "link": "https://medium.com/@lucorset/mempoi-a-mempo-mask-for-apache-poi-to-let-you-conquer-freedom-and-sip-a-good-mojito-on-the-930e1ca337d8"
+  }
+]
