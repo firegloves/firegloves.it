@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
-import Modal from './Modal';
-import Terminal from "./Terminal.jsx";
-import {TerminalProvider} from "../TerminalContext.jsx";
+import Terminal from "./terminal/Terminal.jsx";
+import {TerminalProvider} from "./terminal/TerminalContext.jsx";
 
 const Home = () => {
 
@@ -9,14 +8,18 @@ const Home = () => {
 
   return (
       <div
-          className="bg-blue-500 min-h-screen flex flex-col items-center justify-center bg-[url('/bg-home.jpg')] bg-center bg-cover">
+          className="bg-blue-500 min-h-screen bg-[url('/bg-home.jpg')] bg-center bg-cover">
 
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex flex-col items-center h-screen pt-[150px]">
+
+          <div className="bg-green-600 text-white font-bold py-2 px-4 rounded-full justify-center items-center border-2 border-white">
+            Luca Corsetti Software Engineer
+          </div>
+
           <button
-              className="bg-green-500 text-white font-bold py-2 px-4 rounded-full animate-pulse"
-              onClick={() => setIsTerminalOpen(true)}
-          >
-            Apri Terminale
+              className="bg-green-600 text-white font-bold text-4xl py-2 px-4 mt-[50px] rounded-full animate-pulse border-2 border-white"
+              onClick={() => setIsTerminalOpen(true)}>
+            T
           </button>
 
           {isTerminalOpen &&
@@ -24,18 +27,6 @@ const Home = () => {
                 <Terminal closeModal={() => setIsTerminalOpen(false)}/>
               </TerminalProvider>}
         </div>
-
-        {/*<div className="flex-1 flex flex-col items-center justify-center">*/}
-        {/*  /!*<h1 className="text-4xl text-white font-bold mb-2">*!/*/}
-        {/*  /!*  Benvenuto nel Mio Mondo Sottomarino*!/*/}
-        {/*  /!*</h1>*!/*/}
-        {/*  /!*<p className="text-xl text-white mb-4">*!/*/}
-        {/*  /!*  Immergiti nella mia esperienza professionale e creatività.*!/*/}
-        {/*  /!*</p>*!/*/}
-        {/*  /!* Altri elementi, come bottoni o link *!/*/}
-        {/*</div>*/}
-
-        {/* Footer o altri elementi */}
       </div>
   );
 };

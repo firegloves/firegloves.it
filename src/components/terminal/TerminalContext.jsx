@@ -1,6 +1,8 @@
 import React, {createContext, useContext, useEffect, useReducer} from 'react';
-import {loadLinks, loadProjects, loadPublications, loadSkills, loadWorkExperiences} from "./utils/api.js";
-import {STATE_NAMES} from "./state/terminalStates.jsx";
+import {loadLinks, loadProjects, loadPublications, loadSkills, loadWorkExperiences} from "../../utils/api.js";
+import {STATE_NAMES} from "./terminalStates.jsx";
+import {TERMINAL_THEMES} from "./terminalThemes.js";
+import {selectRandomTheme} from "../../utils/utils.js";
 
 const initialState = {
   skills: [],
@@ -16,12 +18,11 @@ const initialState = {
   listSelectedIndex: 0,
   selectedWorkExp: {},
   history: [],
+  theme: selectRandomTheme()
 };
 
 const TerminalContext = createContext(initialState);
-console.log('createContext')
 
-// Azioni
 export const ACTIONS = {
   SET_RESOURCES: 'set-resources',
   SET_TERMINAL_STATE: 'set-terminal-state',
@@ -30,11 +31,11 @@ export const ACTIONS = {
   SET_COMMAND_OUTPUT: 'set-command-output',
   SET_LIST_FILTER_VALUE: 'set-list-filter-value',
   SET_LIST_SELECTED_INDEX: 'set-list-selected-index',
+  SET_THEME_FROM_CMD: 'set-theme-from-cmd',
+  SET_THEME_FROM_LIST: 'set-theme-from-list',
 };
 
-// Reducer
 const terminalReducer = (state, action) => {
-  console.log('terminalReducer', action.type)
   switch (action.type) {
     case ACTIONS.SET_RESOURCES:
       return {
@@ -46,7 +47,6 @@ const terminalReducer = (state, action) => {
         projects: action.payload.projects,
       }
     case ACTIONS.SET_TERMINAL_STATE:
-      console.log('ACTIONS.SET_TERMINAL_STATE')
       return {
         ...state,
         terminalState: action.payload.terminalState,
@@ -67,6 +67,17 @@ const terminalReducer = (state, action) => {
       return {...state, listFilterValue: action.payload};
     case ACTIONS.SET_LIST_SELECTED_INDEX:
       return {...state, listSelectedIndex: action.payload};
+    case ACTIONS.SET_THEME_FROM_CMD:
+      return {...state,
+        terminalState: STATE_NAMES.COMMAND,
+        theme: TERMINAL_THEMES[action.payload],
+        listToShow: [],
+        selectedIndex: 0,
+        listFilterValue: '',
+        history: []
+      };
+    case ACTIONS.SET_THEME_FROM_LIST:
+      return {...state, theme: TERMINAL_THEMES[action.payload]};
     default:
       return state;
   }
@@ -75,13 +86,10 @@ const terminalReducer = (state, action) => {
 export const TerminalProvider = ({children}) => {
 
   const [state, dispatch] = useReducer(terminalReducer, initialState);
-  console.log('state reducer')
 
   useEffect(() => {
     loadResources();
-    console.log('use effect terminal provider running')
   }, []);
-  console.log('use effect terminal provider')
 
   async function loadResources() {
     try {
@@ -110,9 +118,7 @@ export const TerminalProvider = ({children}) => {
   );
 };
 
-// Hook personalizzato per usare il context
 export const useTerminal = () => {
-  console.log('useContext')
   const context = useContext(TerminalContext);
   if (context === undefined) {
     throw new Error('useTerminal must be used within a TerminalProvider');

@@ -1,5 +1,5 @@
 import {STATE_NAMES, TerminalCommandState, TerminalListState, TerminalWorkExpDetailsState} from "./terminalStates.jsx";
-import {getWorkExpTitle} from "../utils/utils.js";
+import {getWorkExpTitle} from "../../utils/utils.js";
 
 export const LIST_SECTION_TITLE = {
   CORE_SKILLS: 'CORE SKILLS',
@@ -8,10 +8,10 @@ export const LIST_SECTION_TITLE = {
   LINKS: 'LINKS',
   PUBLICATIONS: 'PUBLICATIONS',
   PROJECTS: 'PROJECTS',
+  THEMES: 'THEMES',
 }
 
-const getHandleSelectItem = (terminalState, handleSelectSkill, handleSelectWorkExp, openExternalLink) => {
-  console.log('getHandleSelectItem')
+const getHandleSelectItem = (terminalState, handleSelectSkill, handleSelectWorkExp, openExternalLink, handleSelectTheme) => {
   switch (terminalState) {
     case STATE_NAMES.LIST_SKILLS:
     case STATE_NAMES.LIST_CORE_SKILLS:
@@ -22,6 +22,8 @@ const getHandleSelectItem = (terminalState, handleSelectSkill, handleSelectWorkE
     case STATE_NAMES.LIST_PUBLICATIONS:
     case STATE_NAMES.LIST_PROJECTS:
       return openExternalLink;
+    case STATE_NAMES.LIST_THEMES:
+      return handleSelectTheme;
     default:
       return () => {
       }
@@ -29,13 +31,13 @@ const getHandleSelectItem = (terminalState, handleSelectSkill, handleSelectWorkE
 }
 
 const getListMappingFn = (terminalState) => {
-  console.log('getListMappingFn')
   switch (terminalState) {
     case STATE_NAMES.LIST_LINKS:
     case STATE_NAMES.LIST_PUBLICATIONS:
     case STATE_NAMES.LIST_PROJECTS:
     case STATE_NAMES.LIST_SKILLS:
     case STATE_NAMES.LIST_CORE_SKILLS:
+    case STATE_NAMES.LIST_THEMES:
       return (item) => item.title;
     case STATE_NAMES.LIST_WORK_EXPS:
       return (item) => getWorkExpTitle(item);
@@ -45,7 +47,6 @@ const getListMappingFn = (terminalState) => {
 }
 
 const getSectionTitle = (terminalState) => {
-  console.log('getSectionTitle')
   switch (terminalState) {
     case STATE_NAMES.LIST_CORE_SKILLS:
       return LIST_SECTION_TITLE.CORE_SKILLS;
@@ -64,9 +65,8 @@ const getSectionTitle = (terminalState) => {
   }
 }
 
-export const getCurrentState = (state, dispatch, inputRef, handleSelectSkill, handleSelectWorkExp, openExternalLink) => {
+export const getCurrentState = (state, dispatch, inputRef, handleSelectSkill, handleSelectWorkExp, openExternalLink, handleSelectTheme) => {
 
-  console.log('setting terminal state', state.terminalState)
   switch (state.terminalState) {
     case STATE_NAMES.COMMAND:
       return new TerminalCommandState(state, dispatch, inputRef);
@@ -78,7 +78,8 @@ export const getCurrentState = (state, dispatch, inputRef, handleSelectSkill, ha
     case STATE_NAMES.LIST_LINKS:
     case STATE_NAMES.LIST_PUBLICATIONS:
     case STATE_NAMES.LIST_PROJECTS:
-      const handleSelectItem = getHandleSelectItem(state.terminalState, handleSelectSkill, handleSelectWorkExp, openExternalLink);
+    case STATE_NAMES.LIST_THEMES:
+      const handleSelectItem = getHandleSelectItem(state.terminalState, handleSelectSkill, handleSelectWorkExp, openExternalLink, handleSelectTheme);
       const listMappingFn = getListMappingFn(state.terminalState);
       const sectionTitle = getSectionTitle(state.terminalState);
       return new TerminalListState(state, dispatch, handleSelectItem, listMappingFn, sectionTitle);

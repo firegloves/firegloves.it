@@ -1,11 +1,10 @@
 import React from "react";
-import {TERMINAL_COMMANDS, usage} from "../utils/terminalCommands.js";
-import TerminalList from "../components/TerminalList.jsx";
-import WorkExpDetails from "../components/WorkExpDetails.jsx";
-import {LIST_SECTION_TITLE} from "./stateManagement.js";
-import {ACTIONS, useTerminal} from "../TerminalContext.jsx";
-import {getCoreSkills} from "../utils/utils.js";
-import {dispatchSetTerminalState} from "../actions.js";
+import {TERMINAL_COMMANDS, usage} from "./terminalCommands.js";
+import TerminalList from "../TerminalList.jsx";
+import WorkExpDetails from "../WorkExpDetails.jsx";
+import {ACTIONS} from "./TerminalContext.jsx";
+import {getCoreSkills, themesToListToShow} from "../../utils/utils.js";
+import {dispatchSetTerminalState} from "../../actions.js";
 
 export const STATE_NAMES = {
   COMMAND: 'command',
@@ -16,6 +15,7 @@ export const STATE_NAMES = {
   LIST_PROJECTS: 'listProjects',
   LIST_LINKS: 'listLinks',
   LIST_PUBLICATIONS: 'listPublications',
+  LIST_THEMES: 'listThemes',
 }
 
 
@@ -29,8 +29,6 @@ export class TerminalCommandState {
     this.state = state;
     this.dispatch = dispatch;
     this.inputRef = inputRef;
-
-    console.log('TerminalCommandState constructor')
   }
 
   executeCommand(cmd) {
@@ -56,6 +54,9 @@ export class TerminalCommandState {
       case TERMINAL_COMMANDS.PROJECTS:
         dispatchSetTerminalState(this.dispatch, this.state.projects, STATE_NAMES.LIST_PROJECTS)
         break;
+      case TERMINAL_COMMANDS.THEMES:
+        dispatchSetTerminalState(this.dispatch, themesToListToShow(), STATE_NAMES.LIST_THEMES)
+        break;
       default:
         this.dispatch({ type: ACTIONS.SET_COMMAND_OUTPUT, payload: 'Unknown command' });
         break;
@@ -63,7 +64,6 @@ export class TerminalCommandState {
   };
 
   handleKeyDown = (e) => {
-    console.log('useTerminal Callback running')
     if (e.key === 'Enter') {
       e.preventDefault();
       this.executeCommand(this.state.commandInput);
@@ -82,7 +82,7 @@ export class TerminalCommandState {
                 value={this.state.commandInput}
                 onChange={(e) => this.dispatch({ type: ACTIONS.SET_COMMAND_INPUT, payload: e.target.value })}
                 onKeyDown={this.handleKeyDown}
-                className="flex-1 bg-transparent focus:outline-none text-green-400 pl-2"
+                className="flex-1 bg-transparent focus:outline-none pl-2"
             />
           </div>
         </div>
@@ -102,7 +102,6 @@ export class TerminalListState {
     this.listMappingFn = listMappingFn;
     this.sectionTitle = sectionTitle;
     this.listFilterValue = state.listFilterValue;
-    console.log('TerminalListState constructor')
   }
 
   handleKeyDown = (e) => {
@@ -165,7 +164,6 @@ export class TerminalWorkExpDetailsState {
 
 function handleArrowKeyUpOrDown(e, list, selectedIndex, dispatch) {
   if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
-    console.log('handleArrowKeyUpOrDown');
     e.preventDefault();
     const adjustment = e.key === 'ArrowDown' ? 1 : -1;
     const newIndex = Math.max(0, Math.min(selectedIndex + adjustment, list.length - 1));
@@ -178,7 +176,6 @@ function handleArrowKeyUpOrDown(e, list, selectedIndex, dispatch) {
 function handleEscape(e, state, dispatch) {
   if (e.key === 'Escape') {
     const prevState = state.history.pop();
-    console.log('### prevState', prevState)
     dispatchSetTerminalState(dispatch, prevState.listToShow, prevState.terminalState, prevState.listSelectedIndex, false);
     return true;
   }
@@ -186,7 +183,6 @@ function handleEscape(e, state, dispatch) {
 }
 
 function handleEnterKeyOnList(e, list, selectedIndex, handleSelectItem) {
-  console.log('handle enter on list')
   if (e.key === 'Enter') {
     handleSelectItem(list[selectedIndex]);
     return true;

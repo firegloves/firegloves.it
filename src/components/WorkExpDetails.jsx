@@ -16,8 +16,8 @@ const WorkExpDetails = ({ workExp, onKeyDown }) => {
           tabIndex={-1}
           ref={containerRef}
           onKeyDown={onKeyDown}
-          className="bg-[#0D0208] text-green-400 font-mono p-4 rounded-lg shadow-lg focus:outline-none">
-        <h3 className="text-lg font-bold mb-2 underline decoration-green-500 flex">
+          className="font-mono p-4 rounded-lg shadow-lg focus:outline-none">
+        <h3 className="text-lg font-bold mb-2 underline flex">
           <span>{workExp.title} at {workExp.company}</span>
           <span className="flex-1 text-right">{workExp.period}</span>
         </h3>

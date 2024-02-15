@@ -11,11 +11,9 @@ const loadJsonResource = async (path) => {
   }
 };
 
-
 export const loadSkills = async () => {
   return loadJsonResource('/skills.json');
 };
-
 
 export const loadWorkExperiences = async () => {
   return loadJsonResource('/work-exps.json');

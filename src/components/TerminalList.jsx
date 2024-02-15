@@ -1,27 +1,22 @@
-// src/components/TerminalList.jsx
 import React, {useEffect, useRef} from 'react';
-import {ACTIONS, useTerminal} from "../TerminalContext.jsx";
+import {ACTIONS, useTerminal} from "./terminal/TerminalContext.jsx";
 
 const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDown}) => {
 
-  const {state: {listFilterValue}} = useTerminal();
+  const {state: {listFilterValue, theme}} = useTerminal();
   const itemRefs = useRef([]);
   const containerRef = useRef(null);
 
   useEffect(() => {
     containerRef.current?.focus();
-    console.log('use effect containerRef running')
   }, []);
-  console.log('use effect containerRef')
 
   useEffect(() => {
     itemRefs.current[selectedIndex]?.scrollIntoView({
       behavior: 'smooth',
       block: 'nearest',
     });
-    console.log('use effect scrollIntoView running')
   }, [selectedIndex]);
-  console.log('use effect scrollIntoView')
 
   return (
       <div
@@ -30,15 +25,17 @@ const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDow
           onKeyDown={onKeyDown}
           className="overflow-y-auto h-full p-5 focus:outline-none">
 
-        <h3 className="text-lg font-bold mb-2 underline decoration-green-500 text-center">
+        <h3 className="text-lg font-bold mb-2 underline text-center">
           {sectionTitle}
         </h3>
 
-        <div className="flex mb-2 pl-2 pb-2 border-b-2 border-green-400">
+        <div
+        style={{borderColor: theme.borderColor}}
+            className="flex mb-2 pl-2 pb-2 border-b-2">
           <span>Type to filter: </span>
           <input
               value={listFilterValue}
-              className="flex-1 bg-transparent focus:outline-none text-green-400 pl-2"
+              className="flex-1 bg-transparent focus:outline-none pl-2"
           />
         </div>
 
@@ -46,7 +43,8 @@ const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDow
             <div
                 key={index}
                 ref={(el) => (itemRefs.current[index] = el)}
-                className={`p-2 ${selectedIndex === index ? 'bg-amber-200' : 'transparent'}`}
+                className={`p-2`}
+                style={{backgroundColor: selectedIndex === index ? theme.selectedItemBgColor : 'transparent'}}
                 onClick={() => onSelectItem(index)}
                 tabIndex={0}>
               {item}
