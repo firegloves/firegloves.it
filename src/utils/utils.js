@@ -2,9 +2,9 @@ export function getWorkExpTitle(workExp) {
   return `${workExp.title} at ${workExp.company} (${workExp.period})`;
 }
 
-export function coreSkills(skills) {
-  return Object.entries(skills)
-    .filter((data) => data[1]['coreSkill'] === true);
+export function getCoreSkills(skills) {
+  return skills
+    .filter((sk) => sk.coreSkill === true);
 }
 
 export function skillNames(skills) {

@@ -1,7 +1,7 @@
 // src/components/TerminalList.jsx
 import React, {useEffect, useRef} from 'react';
 
-const TerminalList = ({ data, onSelectItem, selectedIndex, onKeyDown }) => {
+const TerminalList = ({ data, sectionTitle, onSelectItem, selectedIndex, onKeyDown }) => {
   const itemRefs = useRef([]);
   const containerRef = useRef(null);
 
@@ -27,6 +27,10 @@ const TerminalList = ({ data, onSelectItem, selectedIndex, onKeyDown }) => {
           ref={containerRef}
           onKeyDown={onKeyDown}
           className="overflow-y-auto h-full p-5 focus:outline-none">
+
+        <h3 className="text-lg font-bold mb-2 underline decoration-green-500 text-center">
+          {sectionTitle}
+        </h3>
 
         { data.map((item, index) => (
             <div

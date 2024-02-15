@@ -14,5 +14,5 @@ export const TERMINAL_COMMANDS = {
   WORK_EXPS: 'workExps',
   LINKS: 'links',
   PUBLICATIONS: 'pubs',
-  PROJECTS: 'projects',
+  PROJECTS: 'projs',
 }

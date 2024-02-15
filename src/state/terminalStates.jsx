@@ -2,10 +2,15 @@ import React from "react";
 import {TERMINAL_COMMANDS, usage} from "../utils/terminalCommands.js";
 import TerminalList from "../components/TerminalList.jsx";
 import WorkExpDetails from "../components/WorkExpDetails.jsx";
+import {LIST_SECTION_TITLE} from "./stateManagement.js";
+import {ACTIONS, useTerminal} from "../TerminalContext.jsx";
+import {getCoreSkills} from "../utils/utils.js";
+import {dispatchSetTerminalState} from "../actions.js";
 
 export const STATE_NAMES = {
   COMMAND: 'command',
   LIST_SKILLS: 'listSkill',
+  LIST_CORE_SKILLS: 'listCoreSkill',
   LIST_WORK_EXPS: 'listWorkExps',
   WORK_EXP_DETAILS: 'workExpDetails',
   LIST_PROJECTS: 'listProjects',
@@ -13,100 +18,55 @@ export const STATE_NAMES = {
   LIST_PUBLICATIONS: 'listPublications',
 }
 
-export class TerminalListState {
 
-  constructor(setTerminalState, list, setList, selectedIndex, setSelectedIndex, handleSelectItem) {
-    this.setTerminalState = setTerminalState;
-    this.list = list;
-    this.setList = setList;
-    this.selectedIndex = selectedIndex;
-    this.setSelectedIndex = setSelectedIndex;
-    this.handleSelectItem = handleSelectItem;
-  }
-
-  handleKeyDown = (e) => {
-    handleArrowKeyUpOrDown(e, this.list, this.selectedIndex, this.setSelectedIndex)
-    || handleEnterKeyOnList(e, this.list, this.setList, this.selectedIndex, this.handleSelectItem)
-    || handleEscape(e, this.setTerminalState, this.setList, this.setSelectedIndex);
-  }
-
-  render = () => {
-
-    const data = this.list.map(item => item.title);
-
-    return (
-        <TerminalList
-            data={data}
-            onSelectItem={this.handleSelectItem}
-            selectedIndex={this.selectedIndex}
-            onKeyDown={this.handleKeyDown}
-        />
-    );
-  }
-}
 
 /******************************************
  * TerminalCommandState
  *******************************************/
 export class TerminalCommandState {
 
-  constructor(setTerminalState, input, setInput, history, setHistory, inputRef, setTerminalListItems, skills, workExps,
-      links, publications) {
-    this.setTerminalState = setTerminalState;
-    this.setTerminalListItems = setTerminalListItems;
-    this.input = input;
-    this.setInput = setInput;
-    this.history = history;
-    this.setHistory = setHistory;
+  constructor(state, dispatch, inputRef) {
+    this.state = state;
+    this.dispatch = dispatch;
     this.inputRef = inputRef;
-    this.setTerminalListItems = setTerminalListItems;
-    this.skills = skills;
-    this.workExps = workExps;
-    this.links = links;
-    this.publications = publications;
-    console.log('constructor')
-    // focusInput();
 
+    console.log('TerminalCommandState constructor')
   }
 
   executeCommand(cmd) {
-    console.log('exe', this.inputRef.current)
     switch (cmd) {
       case TERMINAL_COMMANDS.HELP:
-        this.setHistory(usage);
+        this.dispatch({ type: ACTIONS.SET_COMMAND_OUTPUT, payload: usage });
         break;
       case TERMINAL_COMMANDS.CORE_SKILLS:
-        this.setTerminalListItems(this.skills)
-        this.setTerminalState(STATE_NAMES.LIST_SKILLS)
+        dispatchSetTerminalState(this.dispatch, getCoreSkills(this.state.skills), STATE_NAMES.LIST_CORE_SKILLS)
         break;
       case TERMINAL_COMMANDS.SKILLS:
-        this.setTerminalListItems(this.skills)
-        this.setTerminalState(STATE_NAMES.LIST_SKILLS)
+        dispatchSetTerminalState(this.dispatch, this.state.skills, STATE_NAMES.LIST_SKILLS)
         break;
       case TERMINAL_COMMANDS.WORK_EXPS:
-        this.setTerminalListItems(this.workExps)
-        this.setTerminalState(STATE_NAMES.LIST_WORK_EXPS)
+        dispatchSetTerminalState(this.dispatch, this.state.workExps, STATE_NAMES.LIST_WORK_EXPS)
         break;
       case TERMINAL_COMMANDS.LINKS:
-        this.setTerminalListItems(this.links)
-        this.setTerminalState(STATE_NAMES.LIST_LINKS)
+        dispatchSetTerminalState(this.dispatch, this.state.links, STATE_NAMES.LIST_LINKS)
         break;
       case TERMINAL_COMMANDS.PUBLICATIONS:
-        this.setTerminalListItems(this.publications)
-        this.setTerminalState(STATE_NAMES.LIST_PUBLICATIONS)
+        dispatchSetTerminalState(this.dispatch, this.state.publications, STATE_NAMES.LIST_PUBLICATIONS)
+        break;
+      case TERMINAL_COMMANDS.PROJECTS:
+        dispatchSetTerminalState(this.dispatch, this.state.projects, STATE_NAMES.LIST_PROJECTS)
         break;
       default:
-        this.setHistory("Unknown command");
+        this.dispatch({ type: ACTIONS.SET_COMMAND_OUTPUT, payload: 'Unknown command' });
         break;
     }
-    this.setInput('');
   };
 
   handleKeyDown = (e) => {
     console.log('useTerminal Callback running')
     if (e.key === 'Enter') {
       e.preventDefault();
-      this.executeCommand(this.input);
+      this.executeCommand(this.state.commandInput);
     }
   };
 
@@ -114,13 +74,13 @@ export class TerminalCommandState {
     return (
         <div className="p-5">
           <span>### Welcome to the CV Terminal. Type 'help' for available commands ###</span>
-          <div className="whitespace-pre-line">{this.history}</div>
+          <div className="whitespace-pre-line">{this.state.commandOutput}</div>
           <div className="flex w-full pt-2">
             <span className="whitespace-nowrap">[firegloves@intrepid ~]$</span>
             <input
                 ref={this.inputRef}
-                value={this.input}
-                onChange={(e) => this.setInput(e.target.value)}
+                value={this.state.commandInput}
+                onChange={(e) => this.dispatch({ type: ACTIONS.SET_COMMAND_INPUT, payload: e.target.value })}
                 onKeyDown={this.handleKeyDown}
                 className="flex-1 bg-transparent focus:outline-none text-green-400 pl-2"
             />
@@ -130,66 +90,84 @@ export class TerminalCommandState {
   }
 }
 
-/******************************************
- * TerminalListSkillState
- *******************************************/
-export class TerminalListSkillState extends TerminalListState {
-  constructor(setTerminalState, terminalListItems, setTerminalListItems, selectedIndex, setSelectedIndex,
-      handleSelectSkill) {
-    super(setTerminalState, terminalListItems, setTerminalListItems, selectedIndex, setSelectedIndex,
-        handleSelectSkill);
-  }
-}
+// /******************************************
+//  * TerminalListState
+//  *******************************************/
+export class TerminalListState {
 
-/******************************************
- * TerminalListWorkExpState
- *******************************************/
-export class TerminalListWorkExpState extends TerminalListState {
-  constructor(setTerminalState, terminalListItems, setTerminalListItems, selectedIndex, setSelectedIndex,
-      handleSelectSkill) {
-    super(setTerminalState, terminalListItems, setTerminalListItems, selectedIndex, setSelectedIndex,
-        handleSelectSkill);
+  constructor(state, dispatch, handleSelectItem, listMappingFn, sectionTitle) {
+    this.state = state;
+    this.dispatch = dispatch;
+    this.handleSelectItem = handleSelectItem;
+    this.listMappingFn = listMappingFn;
+    this.sectionTitle = sectionTitle;
+    console.log('TerminalListState constructor')
+  }
+
+  handleKeyDown = (e) => {
+    handleArrowKeyUpOrDown(e, this.state.listToShow, this.state.listSelectedIndex, this.dispatch)
+    || handleEnterKeyOnList(e, this.state.listToShow, this.state.listSelectedIndex, this.handleSelectItem, this.dispatch)
+    || handleEscape(e, this.state, this.dispatch);
+  }
+
+  render = () => {
+
+    const data = this.state.listToShow.map(this.listMappingFn);
+
+    return (
+        <TerminalList
+            data={data}
+            sectionTitle={this.sectionTitle}
+            onSelectItem={this.handleSelectItem}
+            selectedIndex={this.state.listSelectedIndex}
+            onKeyDown={this.handleKeyDown}
+        />
+    );
   }
 }
 
 /******************************************
  * TerminalWorkExpDetailsState
  *******************************************/
-export const TerminalWorkExpDetailsState = (setTerminalState, workExp, setTerminalListItems, setSelectedIndex) => {
-  const handleKeyDown = (e) => {
-    handleEscape(e, setTerminalState, setTerminalListItems, setSelectedIndex);
+export class TerminalWorkExpDetailsState {
+
+  constructor(state, dispatch) {
+    this.state = state;
+    this.dispatch = dispatch;
   }
 
-  return {
-    render: () => {
+  handleKeyDown = (e) => {
+    handleEscape(e, this.state, this.dispatch);
+  }
+
+  render = () => {
       return (
-          <WorkExpDetails workExp={workExp} onKeyDown={handleKeyDown}/>
+          <WorkExpDetails workExp={this.state.selectedWorkExp} onKeyDown={this.handleKeyDown}/>
       );
     }
-  }
 }
 
-function handleArrowKeyUpOrDown(e, list, selectedIndex, setSelectedIndex) {
+function handleArrowKeyUpOrDown(e, list, selectedIndex, dispatch) {
   if (['ArrowUp', 'ArrowDown'].includes(e.key)) {
     console.log('handleArrowKeyUpOrDown');
     e.preventDefault();
     const adjustment = e.key === 'ArrowDown' ? 1 : -1;
     const newIndex = Math.max(0, Math.min(selectedIndex + adjustment, list.length - 1));
-    setSelectedIndex(newIndex);
+    dispatch({ type: ACTIONS.SET_LIST_SELECTED_INDEX, payload: newIndex });
     return true;
   }
   return false;
 }
 
-function handleEscape(e, setTerminalState, setTerminalListItems, setSelectedIndex) {
+function handleEscape(e, state, dispatch) {
   if (e.key === 'Escape') {
-    setTerminalState(STATE_NAMES.COMMAND);
-    setTerminalListItems([]);
-    setSelectedIndex(0);
+    const prevState = state.history.pop();
+    console.log('### prevState', prevState)
+    dispatchSetTerminalState(dispatch, prevState.listToShow, prevState.terminalState, prevState.listSelectedIndex, false);
   }
 }
 
-function handleEnterKeyOnList(e, list, setList, selectedIndex, handleSelectItem) {
+function handleEnterKeyOnList(e, list, selectedIndex, handleSelectItem) {
   console.log('handle enter on list')
   if (e.key === 'Enter') {
     handleSelectItem(list[selectedIndex]);
