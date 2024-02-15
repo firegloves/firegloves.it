@@ -101,13 +101,28 @@ export class TerminalListState {
     this.handleSelectItem = handleSelectItem;
     this.listMappingFn = listMappingFn;
     this.sectionTitle = sectionTitle;
+    this.listFilterValue = state.listFilterValue;
     console.log('TerminalListState constructor')
   }
 
   handleKeyDown = (e) => {
     handleArrowKeyUpOrDown(e, this.state.listToShow, this.state.listSelectedIndex, this.dispatch)
     || handleEnterKeyOnList(e, this.state.listToShow, this.state.listSelectedIndex, this.handleSelectItem, this.dispatch)
-    || handleEscape(e, this.state, this.dispatch);
+    || handleEscape(e, this.state, this.dispatch)
+    || this.setFilterInputValue(e);
+  }
+
+  setFilterInputValue = (e) => {
+    switch (true) {
+      case /^[a-zA-Z0-9]$/.test(e.key):
+        this.dispatch({ type: ACTIONS.SET_LIST_FILTER_VALUE, payload: this.listFilterValue += e.key});
+        break;
+      case e.key === 'Backspace':
+        this.dispatch({ type: ACTIONS.SET_LIST_FILTER_VALUE, payload: this.listFilterValue.slice(0, -1) });
+        break;
+      default:
+        break;
+    }
   }
 
   render = () => {
@@ -116,6 +131,7 @@ export class TerminalListState {
 
     return (
         <TerminalList
+            filterValue={this.listFilterValue}
             data={data}
             sectionTitle={this.sectionTitle}
             onSelectItem={this.handleSelectItem}
@@ -164,7 +180,9 @@ function handleEscape(e, state, dispatch) {
     const prevState = state.history.pop();
     console.log('### prevState', prevState)
     dispatchSetTerminalState(dispatch, prevState.listToShow, prevState.terminalState, prevState.listSelectedIndex, false);
+    return true;
   }
+  return false;
 }
 
 function handleEnterKeyOnList(e, list, selectedIndex, handleSelectItem) {

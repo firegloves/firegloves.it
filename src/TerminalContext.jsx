@@ -12,6 +12,7 @@ const initialState = {
   commandInput: '',
   commandOutput: '',
   listToShow: [],
+  listFilterValue: '',
   listSelectedIndex: 0,
   selectedWorkExp: {},
   history: [],
@@ -27,11 +28,8 @@ export const ACTIONS = {
   SET_TERMINAL_STATE_FROM_HISTORY: 'set-terminal-state-from-history',
   SET_COMMAND_INPUT: 'set-command-input',
   SET_COMMAND_OUTPUT: 'set-command-output',
-  SET_LIST_TO_SHOW: 'set-list-to-show',
+  SET_LIST_FILTER_VALUE: 'set-list-filter-value',
   SET_LIST_SELECTED_INDEX: 'set-list-selected-index',
-  SET_SELECTED_WORK_EXP: 'set-selected-work-exp',
-  SET_HISTORY: 'set-history',
-  HANDLE_LIST_ITEM_SELECTION: 'handle-list-item-selection'
 };
 
 // Reducer
@@ -56,6 +54,7 @@ const terminalReducer = (state, action) => {
         listToShow: action.payload.listToShow,
         listSelectedIndex: action.payload.listSelectedIndex,
         selectedWorkExp: action.payload.selectedWorkExp,
+        listFilterValue: '',
         history: action.payload.updateHistory
             ? [...state.history, {terminalState: state.terminalState, listToShow: state.listToShow, listSelectedIndex: state.listSelectedIndex}]
             : state.history,
@@ -64,26 +63,10 @@ const terminalReducer = (state, action) => {
       return {...state, commandInput: action.payload};
     case ACTIONS.SET_COMMAND_OUTPUT:
       return {...state, commandOutput: action.payload, commandInput: ''};
-    case ACTIONS.SET_LIST_TO_SHOW:
-      return {
-        ...state,
-        listToShow: action.payload.listToShow,
-        terminalState: action.payload.terminalState,
-        commandInput: ''
-      };
+    case ACTIONS.SET_LIST_FILTER_VALUE:
+      return {...state, listFilterValue: action.payload};
     case ACTIONS.SET_LIST_SELECTED_INDEX:
       return {...state, listSelectedIndex: action.payload};
-    case ACTIONS.SET_SELECTED_WORK_EXP:
-      return {...state, selectedWorkExp: action.payload};
-    case ACTIONS.SET_HISTORY:
-      return {...state, history: action.payload};
-    case ACTIONS.HANDLE_LIST_ITEM_SELECTION:
-      return {
-        ...state,
-        listToShow: action.payload.listToShow,
-        terminalState: action.payload.terminalState,
-        listSelectedIndex: 0,
-      };
     default:
       return state;
   }

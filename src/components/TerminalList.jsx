@@ -1,13 +1,16 @@
 // src/components/TerminalList.jsx
 import React, {useEffect, useRef} from 'react';
+import {ACTIONS, useTerminal} from "../TerminalContext.jsx";
 
-const TerminalList = ({ data, sectionTitle, onSelectItem, selectedIndex, onKeyDown }) => {
+const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDown}) => {
+
+  const {state: {listFilterValue}} = useTerminal();
   const itemRefs = useRef([]);
   const containerRef = useRef(null);
 
   useEffect(() => {
     containerRef.current?.focus();
-  console.log('use effect containerRef running')
+    console.log('use effect containerRef running')
   }, []);
   console.log('use effect containerRef')
 
@@ -20,7 +23,6 @@ const TerminalList = ({ data, sectionTitle, onSelectItem, selectedIndex, onKeyDo
   }, [selectedIndex]);
   console.log('use effect scrollIntoView')
 
-
   return (
       <div
           tabIndex={-1}
@@ -32,7 +34,15 @@ const TerminalList = ({ data, sectionTitle, onSelectItem, selectedIndex, onKeyDo
           {sectionTitle}
         </h3>
 
-        { data.map((item, index) => (
+        <div className="flex mb-2 pl-2 pb-2 border-b-2 border-green-400">
+          <span>Type to filter: </span>
+          <input
+              value={listFilterValue}
+              className="flex-1 bg-transparent focus:outline-none text-green-400 pl-2"
+          />
+        </div>
+
+        {data.filter(item => item.toLowerCase().startsWith(listFilterValue.toLowerCase())).map((item, index) => (
             <div
                 key={index}
                 ref={(el) => (itemRefs.current[index] = el)}
