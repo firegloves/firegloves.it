@@ -3,7 +3,7 @@ import {TERMINAL_COMMANDS, usage} from "./terminalCommands.js";
 import TerminalList from "../TerminalList.jsx";
 import WorkExpDetails from "../WorkExpDetails.jsx";
 import {ACTIONS} from "./TerminalContext.jsx";
-import {getCoreSkills, themesToListToShow} from "../../utils/utils.js";
+import {getCoreSkills, goBack, themesToListToShow} from "../../utils/utils.js";
 import {dispatchSetTerminalState} from "../../actions.js";
 
 export const STATE_NAMES = {
@@ -74,8 +74,8 @@ export class TerminalCommandState {
     return (
         <div className="p-5">
           <span>### Welcome to the CV Terminal. Type 'help' for available commands ###</span>
-          <div className="whitespace-pre-line">{this.state.commandOutput}</div>
-          <div className="flex w-full pt-2">
+          <div className="whitespace-pre-line max-[420px]:text-xs">{this.state.commandOutput}</div>
+          <div className="flex flex-wrap md:flex-nowrap w-full pt-2">
             <span className="whitespace-nowrap">[firegloves@intrepid ~]$</span>
             <input
                 ref={this.inputRef}
@@ -130,10 +130,9 @@ export class TerminalListState {
 
     return (
         <TerminalList
-            filterValue={this.listFilterValue}
             data={data}
             sectionTitle={this.sectionTitle}
-            onSelectItem={this.handleSelectItem}
+            onSelectItem={this.handleKeyDown}
             selectedIndex={this.state.listSelectedIndex}
             onKeyDown={this.handleKeyDown}
         />
@@ -175,8 +174,7 @@ function handleArrowKeyUpOrDown(e, list, selectedIndex, dispatch) {
 
 function handleEscape(e, state, dispatch) {
   if (e.key === 'Escape') {
-    const prevState = state.history.pop();
-    dispatchSetTerminalState(dispatch, prevState.listToShow, prevState.terminalState, prevState.listSelectedIndex, false);
+    goBack(state, dispatch);
     return true;
   }
   return false;

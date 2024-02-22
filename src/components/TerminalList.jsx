@@ -30,10 +30,11 @@ const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDow
         </h3>
 
         <div
-        style={{borderColor: theme.borderColor}}
+            style={{borderColor: theme.borderColor}}
             className="flex mb-2 pl-2 pb-2 border-b-2">
           <span>Type to filter: </span>
           <input
+              onChange={() => {}}
               value={listFilterValue}
               className="flex-1 bg-transparent focus:outline-none pl-2"
           />
@@ -45,7 +46,7 @@ const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDow
                 ref={(el) => (itemRefs.current[index] = el)}
                 className={`p-2`}
                 style={{backgroundColor: selectedIndex === index ? theme.selectedItemBgColor : 'transparent'}}
-                onClick={() => onSelectItem(index)}
+                onClick={() => onSelectItem({key: 'Enter'})}
                 tabIndex={0}>
               {item}
             </div>

@@ -3,6 +3,7 @@
 @tailwind utilities;
 
  .terminal {
+  @apply max-[420px]:text-sm;
   font-family: 'IBM Plex Mono', monospace;
   border-width: 2px;
   border-radius: 10px;

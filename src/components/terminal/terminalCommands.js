@@ -18,5 +18,7 @@ export const usage = `Available commands:
         - ${TERMINAL_COMMANDS.LINKS}: shows a list of links
         - ${TERMINAL_COMMANDS.PROJECTS}: shows a list of projects
         - ${TERMINAL_COMMANDS.PUBLICATIONS}: shows a list of publications
-        - ${TERMINAL_COMMANDS.THEMES}: shows a list of themes`;
+        - ${TERMINAL_COMMANDS.THEMES}: shows a list of themes
+        - ---
+        - Press Esc to go back`;
 

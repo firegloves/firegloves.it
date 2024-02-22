@@ -12,12 +12,15 @@ const Home = () => {
 
         <div className="flex flex-col items-center h-screen pt-[150px]">
 
+          <div
+              className="h-20 w-20 relative top-2 bg-green-600 rounded-full border-2 border-white bg-cover bg-[url('/photo.jpg')]">
+          </div>
           <div className="bg-green-600 text-white font-bold py-2 px-4 rounded-full justify-center items-center border-2 border-white">
-            Luca Corsetti Software Engineer
+            Luca Corsetti - Software Engineer
           </div>
 
           <button
-              className="bg-green-600 text-white font-bold text-4xl py-2 px-4 mt-[50px] rounded-full animate-pulse border-2 border-white"
+              className="bg-green-600 text-white font-bold text-4xl px-10 mt-[50px] rounded-sm animate-pulse border-2 border-white"
               onClick={() => setIsTerminalOpen(true)}>
             T
           </button>

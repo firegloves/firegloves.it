@@ -16,7 +16,7 @@ const WorkExpDetails = ({ workExp, onKeyDown }) => {
           tabIndex={-1}
           ref={containerRef}
           onKeyDown={onKeyDown}
-          className="font-mono p-4 rounded-lg shadow-lg focus:outline-none">
+          className="font-mono p-4 rounded-lg shadow-lg focus:outline-none overflow-y-auto">
         <h3 className="text-lg font-bold mb-2 underline flex">
           <span>{workExp.title} at {workExp.company}</span>
           <span className="flex-1 text-right">{workExp.period}</span>
@@ -28,8 +28,9 @@ const WorkExpDetails = ({ workExp, onKeyDown }) => {
             ))}
           </ul>
         </div>
-        <div className="text-sm italic">
-          Technologies: <span className="font-normal not-italic">{workExp.techs.join(', ')}</span>
+        <div className="text-sm">
+          <span className="italic underline">Technologies</span>
+          <span className="font-normal">: {workExp.techs.join(', ')}</span>
         </div>
       </div>
   );

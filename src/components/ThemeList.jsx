@@ -33,7 +33,7 @@ const ThemeList = () => {
             <div className="diagonal-half absolute w-full h-full"
                  style={{clipPath: 'polygon(0 0, 100% 0, 0 100%)', backgroundColor: theme.textColor}}></div>
           </div>
-          <span className="pl-2">Themes</span>
+          <span className="pl-2 text-sm md:text-lg max-[420px]:hidden">Themes</span>
         </div>
 
         {isThemeListOpen && (
@@ -44,7 +44,7 @@ const ThemeList = () => {
               {themeList.map((item, index) => (
                   <div
                       key={index}
-                      className="p-2"
+                      className="p-2 text-sm md:text-md"
                       style={{backgroundColor: item.headerBgColor, color: item.textColor}}
                       onClick={() => onSelectItem(item.title)}
                       tabIndex={0}>
