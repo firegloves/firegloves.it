@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, {useEffect, useRef} from 'react';
 
 const WorkExpDetails = ({ workExp, onKeyDown }) => {
   const containerRef = useRef(null);

@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import {ACTIONS, useTerminal} from "./terminal/TerminalContext.jsx";
 import {themesToListToShow} from "../utils/utils.js";
 

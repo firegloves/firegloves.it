@@ -1,11 +1,6 @@
 import React, {useEffect} from 'react';
 import {useTerminal} from './TerminalContext.jsx';
 import {useTerminalHook} from "./useTerminalHook.js";
-import {
-  STATE_NAMES,
-  TerminalCommandState,
-  TerminalWorkExpDetailsState
-} from "./terminalStates.jsx";
 import {getCurrentState} from "./stateManagement.js";
 import ThemeList from "../ThemeList.jsx";
 import {goBack} from "../../utils/utils.js";
@@ -31,7 +26,7 @@ const Terminal = ({closeModal}) => {
   }, [inputRef]);
 
   return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 h-full flex justify-center items-center">
+      <div className="fixed inset-0 bg-black bg-opacity-50 h-full flex justify-center items-center z-[2]">
         <div
             style={{color: state.theme.textColor, backgroundColor: state.theme.bgColor, borderColor: state.theme.borderColor}}
             onClick={() => inputRef.current && inputRef.current.focus()}

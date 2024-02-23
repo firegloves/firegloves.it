@@ -1,5 +1,5 @@
-import {useCallback, useEffect, useRef, useState} from 'react';
-import {ACTIONS, useTerminal} from "./TerminalContext.jsx";
+import {useCallback, useEffect, useRef} from 'react';
+import {useTerminal} from "./TerminalContext.jsx";
 import {STATE_NAMES} from "./terminalStates.jsx";
 import {openLinkInNewTab} from "../../utils/utils.js";
 import {dispatchSetTerminalState, dispatchSetTheme, dispatchSetWorkExpDetailsTerminalState} from "../../actions.js";

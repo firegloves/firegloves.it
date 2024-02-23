@@ -2,24 +2,82 @@
 @tailwind components;
 @tailwind utilities;
 
- .terminal {
+.terminal {
   @apply max-[420px]:text-sm;
   font-family: 'IBM Plex Mono', monospace;
   border-width: 2px;
   border-radius: 10px;
 }
 
+.delayed-pulse {
+  animation-delay: 1s;
+}
+
+/* loader */
 @keyframes moveAround {
- 0% { transform: rotate(var(--angle)) translateX(100px); }
- 50% { transform: rotate(calc(var(--angle) + 180deg)) translateX(85px); }
- 100% { transform: rotate(calc(var(--angle) + 360deg)) translateX(100px); }
+  0% {
+    transform: rotate(var(--angle)) translateX(100px);
+  }
+  50% {
+    transform: rotate(calc(var(--angle) + 180deg)) translateX(85px);
+  }
+  100% {
+    transform: rotate(calc(var(--angle) + 360deg)) translateX(100px);
+  }
 }
 
 @keyframes speedControl {
- 0%, 100% { animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5); }
- 50% { animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1); }
+  0%, 100% {
+    animation-timing-function: cubic-bezier(0.5, 0, 1, 0.5);
+  }
+  50% {
+    animation-timing-function: cubic-bezier(0, 0.5, 0.5, 1);
+  }
 }
 
 .loader .dot {
- animation: moveAround 2s infinite, speedControl 2s infinite;
+  animation: moveAround 2s infinite, speedControl 2s infinite;
 }
+
+/* /loader */
+
+/* fade in */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  opacity: 0;
+  @apply animate-fadeIn;
+}
+
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn var(--fade-duration, 0.8s) ease-out forwards;
+    animation-delay: var(--fade-delay, 0s);
+  }
+}
+
+/* /fade in */
+
+/* /fade out */
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.fadeOut {
+  animation: fadeOut 0.5s ease-out forwards;
+}
+
