@@ -24,7 +24,7 @@ const ThemeList = () => {
   return (
       <div
           tabIndex={-1}
-          className="overflow-y-auto pl-5 focus:outline-none basis-32 cursor-pointer">
+          className="overflow-y-auto pl-3 focus:outline-none basis-32 cursor-pointer">
 
         <div className="h-[30px] flex items-center"
              onClick={toggleThemeList}>

@@ -4,6 +4,7 @@ import {useTerminalHook} from "./useTerminalHook.js";
 import {getCurrentState} from "./stateManagement.js";
 import ThemeList from "../ThemeList.jsx";
 import {goBack} from "../../utils/utils.js";
+import Photo from "../Photo.jsx";
 
 const Terminal = ({closeModal}) => {
 
@@ -26,7 +27,8 @@ const Terminal = ({closeModal}) => {
   }, [inputRef]);
 
   return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 h-full flex justify-center items-center z-[2]">
+      <div className="fixed inset-0 bg-black bg-opacity-50 h-full flex justify-center items-center z-[2] fadeIn"
+           style={{'--fade-duration': '0.2s'}}>
         <div
             style={{color: state.theme.textColor, backgroundColor: state.theme.bgColor, borderColor: state.theme.borderColor}}
             onClick={() => inputRef.current && inputRef.current.focus()}
@@ -34,12 +36,18 @@ const Terminal = ({closeModal}) => {
           <div
               style={{backgroundColor: state.theme.headerBgColor}}
               className="flex justify-between items-center p-2 rounded-t text-lg">
+
+            <Photo cssClasses={`w-[30px] h-[30px] ml-2`} borderStyle={{borderColor: state.theme.borderColor}}></Photo>
+
             <ThemeList />
+
             <h1 className="text-center flex-1 text-sm md:text-lg">CV Terminal</h1>
+
             <div className="basis-32 text-right pr-2">
               <button onClick={() => goBack(state, dispatch)} className="text-2xl hover:text-red-600 pr-2">&#x25C0;</button>
               <button onClick={closeModal} className="text-2xl hover:text-red-600 pl-2">&#x2715;</button>
             </div>
+
           </div>
           {render()}
         </div>

@@ -1,6 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import Terminal from "./terminal/Terminal.jsx";
 import {TerminalProvider} from "./terminal/TerminalContext.jsx";
+import Loader from "./Loader.jsx";
+import Photo from "./Photo.jsx";
 
 const Home = () => {
 
@@ -19,28 +21,15 @@ const Home = () => {
       <div
           className="min-h-screen">
 
-        <div
-            className={`absolute w-full flex flex-col items-center justify-center h-screen bg-black bg-opacity-50 ${imageLoaded
-                ? 'fadeOut' : 'fadeIn'}`}
-            style={{'--fade-duration': '0.5s'}}>
-          <div
-              className="loader relative w-32 h-32 rounded-full bg-green-600 flex items-center justify-center border-2 border-white">
-            <span className="text-white font-bold text-6xl">F</span>
-            <div className="dot absolute bg-green-600 rounded-full w-6 h-6 border-2 border-white"
-                 style={{'--angle': '0deg', 'transform': 'translateX(100px)'}}></div>
-            <div className="dot absolute bg-green-600 rounded-full w-6 h-6 border-2 border-white"
-                 style={{'--angle': '180deg', 'transform': 'translateX(100px)'}}></div>
-          </div>
-        </div>
+        <Loader imageLoaded={imageLoaded}></Loader>
 
         {imageLoaded && (
             <div
                 className="main absolute w-full flex flex-col items-center h-screen pt-[150px] bg-[url('/bg-home.jpg')] bg-center bg-cover fadeIn"
                 style={{'--fade-delay': '0.2s'}}>
-              <div
-                  className="h-20 w-20 relative top-2 bg-green-600 rounded-full border-2 border-white bg-cover bg-[url('/photo.jpg')] fadeIn z-[1]"
-                  style={{'--fade-delay': '0.4s'}}>
-              </div>
+
+              <Photo cssClasses={'fadeIn z-[1] top-2'}></Photo>
+
               <div
                   className="bg-green-600 text-white font-bold py-2 px-4 rounded-full justify-center items-center border-2 border-white fadeIn"
                   style={{'--fade-delay': '0.6s'}}>

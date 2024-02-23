@@ -5,6 +5,7 @@ import WorkExpDetails from "../WorkExpDetails.jsx";
 import {ACTIONS} from "./TerminalContext.jsx";
 import {getCoreSkills, goBack, themesToListToShow} from "../../utils/utils.js";
 import {dispatchSetTerminalState} from "../../actions.js";
+import TerminalInput from "../TerminalInput.jsx";
 
 export const STATE_NAMES = {
   COMMAND: 'command',
@@ -70,20 +71,7 @@ export class TerminalCommandState {
 
   render = () => {
     return (
-        <div className="p-5">
-          <span>### Welcome to the CV Terminal. Type 'help' for available commands ###</span>
-          <div className="whitespace-pre-line max-[420px]:text-xs">{this.state.commandOutput}</div>
-          <div className="flex flex-wrap md:flex-nowrap w-full pt-2">
-            <span className="whitespace-nowrap">[firegloves@intrepid ~]$</span>
-            <input
-                ref={this.inputRef}
-                value={this.state.commandInput}
-                onChange={(e) => this.dispatch({type: ACTIONS.SET_COMMAND_INPUT, payload: e.target.value})}
-                onKeyDown={this.handleKeyDown}
-                className="flex-1 bg-transparent focus:outline-none pl-2"
-            />
-          </div>
-        </div>
+        <TerminalInput inputRef={this.inputRef} handleKeyDown={this.handleKeyDown}></TerminalInput>
     )
   }
 }
@@ -129,11 +117,6 @@ export class TerminalListState {
   }
 
   render = () => {
-
-    // const data = this.state.listToShow
-    // .map(this.listMappingFn)
-    // .filter(item => item.toLowerCase().startsWith(this.listFilterValue.toLowerCase()));
-    // const data = this.state.listToShow.map(this.listMappingFn);
 
     return (
         <TerminalList

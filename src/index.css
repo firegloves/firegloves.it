@@ -9,10 +9,6 @@
   border-radius: 10px;
 }
 
-.delayed-pulse {
-  animation-delay: 1s;
-}
-
 /* loader */
 @keyframes moveAround {
   0% {
