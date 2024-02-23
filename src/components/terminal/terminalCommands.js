@@ -1,8 +1,8 @@
 export const TERMINAL_COMMANDS = {
   HELP: 'help',
-  CORE_SKILLS: 'coreSkills',
+  CORE_SKILLS: 'coreskills',
   SKILLS: 'skills',
-  WORK_EXPS: 'workExps',
+  WORK_EXPS: 'workexps',
   LINKS: 'links',
   PROJECTS: 'projs',
   PUBLICATIONS: 'pubs',

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {ACTIONS, useTerminal} from "./terminal/TerminalContext.jsx";
+import {useTerminal} from "./terminal/TerminalContext.jsx";
 
 const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDown}) => {
 
@@ -31,16 +31,17 @@ const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDow
 
         <div
             style={{borderColor: theme.borderColor}}
-            className="flex mb-2 pl-2 pb-2 border-b-2">
+            className="mb-2 pl-2 pb-2 border-b-2 hidden sm:flex">
           <span>Type to filter: </span>
           <input
-              onChange={() => {}}
+              onChange={() => {
+              }}
               value={listFilterValue}
               className="flex-1 bg-transparent focus:outline-none pl-2"
           />
         </div>
 
-        {data.filter(item => item.toLowerCase().startsWith(listFilterValue.toLowerCase())).map((item, index) => (
+        {data.map((item, index) => (
             <div
                 key={index}
                 ref={(el) => (itemRefs.current[index] = el)}

@@ -31,7 +31,7 @@ const Terminal = ({closeModal}) => {
   }, [inputRef]);
 
   return (
-      <div className="fixed inset-0 bg-black bg-opacity-50 h-full flex justify-center items-center p-10">
+      <div className="fixed inset-0 bg-black bg-opacity-50 h-full flex justify-center items-center">
         <div
             style={{color: state.theme.textColor, backgroundColor: state.theme.bgColor, borderColor: state.theme.borderColor}}
             onClick={() => inputRef.current && inputRef.current.focus()}

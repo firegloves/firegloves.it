@@ -64,7 +64,7 @@ const terminalReducer = (state, action) => {
     case ACTIONS.SET_COMMAND_OUTPUT:
       return {...state, commandOutput: action.payload, commandInput: ''};
     case ACTIONS.SET_LIST_FILTER_VALUE:
-      return {...state, listFilterValue: action.payload};
+      return {...state, listFilterValue: action.payload, selectedIndex: 0};
     case ACTIONS.SET_LIST_SELECTED_INDEX:
       return {...state, listSelectedIndex: action.payload};
     case ACTIONS.SET_THEME_FROM_CMD:

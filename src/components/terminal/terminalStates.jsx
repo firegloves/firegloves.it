@@ -18,8 +18,6 @@ export const STATE_NAMES = {
   LIST_THEMES: 'listThemes',
 }
 
-
-
 /******************************************
  * TerminalCommandState
  *******************************************/
@@ -32,9 +30,9 @@ export class TerminalCommandState {
   }
 
   executeCommand(cmd) {
-    switch (cmd) {
+    switch (cmd.toLowerCase()) {
       case TERMINAL_COMMANDS.HELP:
-        this.dispatch({ type: ACTIONS.SET_COMMAND_OUTPUT, payload: usage });
+        this.dispatch({type: ACTIONS.SET_COMMAND_OUTPUT, payload: usage});
         break;
       case TERMINAL_COMMANDS.CORE_SKILLS:
         dispatchSetTerminalState(this.dispatch, getCoreSkills(this.state.skills), STATE_NAMES.LIST_CORE_SKILLS)
@@ -58,7 +56,7 @@ export class TerminalCommandState {
         dispatchSetTerminalState(this.dispatch, themesToListToShow(), STATE_NAMES.LIST_THEMES)
         break;
       default:
-        this.dispatch({ type: ACTIONS.SET_COMMAND_OUTPUT, payload: 'Unknown command' });
+        this.dispatch({type: ACTIONS.SET_COMMAND_OUTPUT, payload: 'Unknown command'});
         break;
     }
   };
@@ -80,7 +78,7 @@ export class TerminalCommandState {
             <input
                 ref={this.inputRef}
                 value={this.state.commandInput}
-                onChange={(e) => this.dispatch({ type: ACTIONS.SET_COMMAND_INPUT, payload: e.target.value })}
+                onChange={(e) => this.dispatch({type: ACTIONS.SET_COMMAND_INPUT, payload: e.target.value})}
                 onKeyDown={this.handleKeyDown}
                 className="flex-1 bg-transparent focus:outline-none pl-2"
             />
@@ -102,11 +100,17 @@ export class TerminalListState {
     this.listMappingFn = listMappingFn;
     this.sectionTitle = sectionTitle;
     this.listFilterValue = state.listFilterValue;
+    this.filteredList = this.state.listToShow
+    .filter(item => item.title.toLowerCase().startsWith(this.listFilterValue.toLowerCase()))
+    this.filteredListToShow = this.state.listToShow
+    .map(this.listMappingFn)
+    .filter(item => item.toLowerCase().startsWith(this.listFilterValue.toLowerCase()));
   }
 
   handleKeyDown = (e) => {
-    handleArrowKeyUpOrDown(e, this.state.listToShow, this.state.listSelectedIndex, this.dispatch)
-    || handleEnterKeyOnList(e, this.state.listToShow, this.state.listSelectedIndex, this.handleSelectItem, this.dispatch)
+    handleArrowKeyUpOrDown(e, this.filteredListToShow, this.state.listSelectedIndex, this.dispatch)
+    || handleEnterKeyOnList(e, this.filteredList, this.state.listSelectedIndex, this.handleSelectItem,
+        this.dispatch)
     || handleEscape(e, this.state, this.dispatch)
     || this.setFilterInputValue(e);
   }
@@ -114,10 +118,10 @@ export class TerminalListState {
   setFilterInputValue = (e) => {
     switch (true) {
       case /^[a-zA-Z0-9]$/.test(e.key):
-        this.dispatch({ type: ACTIONS.SET_LIST_FILTER_VALUE, payload: this.listFilterValue += e.key});
+        this.dispatch({type: ACTIONS.SET_LIST_FILTER_VALUE, payload: this.listFilterValue += e.key});
         break;
       case e.key === 'Backspace':
-        this.dispatch({ type: ACTIONS.SET_LIST_FILTER_VALUE, payload: this.listFilterValue.slice(0, -1) });
+        this.dispatch({type: ACTIONS.SET_LIST_FILTER_VALUE, payload: this.listFilterValue.slice(0, -1)});
         break;
       default:
         break;
@@ -126,11 +130,14 @@ export class TerminalListState {
 
   render = () => {
 
-    const data = this.state.listToShow.map(this.listMappingFn);
+    // const data = this.state.listToShow
+    // .map(this.listMappingFn)
+    // .filter(item => item.toLowerCase().startsWith(this.listFilterValue.toLowerCase()));
+    // const data = this.state.listToShow.map(this.listMappingFn);
 
     return (
         <TerminalList
-            data={data}
+            data={this.filteredListToShow}
             sectionTitle={this.sectionTitle}
             onSelectItem={this.handleKeyDown}
             selectedIndex={this.state.listSelectedIndex}
@@ -155,10 +162,10 @@ export class TerminalWorkExpDetailsState {
   }
 
   render = () => {
-      return (
-          <WorkExpDetails workExp={this.state.selectedWorkExp} onKeyDown={this.handleKeyDown}/>
-      );
-    }
+    return (
+        <WorkExpDetails workExp={this.state.selectedWorkExp} onKeyDown={this.handleKeyDown}/>
+    );
+  }
 }
 
 function handleArrowKeyUpOrDown(e, list, selectedIndex, dispatch) {
@@ -166,7 +173,7 @@ function handleArrowKeyUpOrDown(e, list, selectedIndex, dispatch) {
     e.preventDefault();
     const adjustment = e.key === 'ArrowDown' ? 1 : -1;
     const newIndex = Math.max(0, Math.min(selectedIndex + adjustment, list.length - 1));
-    dispatch({ type: ACTIONS.SET_LIST_SELECTED_INDEX, payload: newIndex });
+    dispatch({type: ACTIONS.SET_LIST_SELECTED_INDEX, payload: newIndex});
     return true;
   }
   return false;
