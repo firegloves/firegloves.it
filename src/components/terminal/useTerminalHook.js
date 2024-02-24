@@ -13,7 +13,7 @@ export const useTerminalHook = () => {
     inputRef.current?.focus();
   }, [terminalState]);
 
-  const handleSelectSkill = useCallback((skill) => {
+  const handleSelectSkill = useCallback((skill, index) => {
     const filteredWorkExps = workExps
       .filter(exp => skill.workExpIds.includes(exp.id));
     dispatchSetTerminalState(dispatch, filteredWorkExps, STATE_NAMES.LIST_WORK_EXPS)

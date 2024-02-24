@@ -1,9 +1,9 @@
 import React, {useEffect, useRef} from 'react';
-import {useTerminal} from "./terminal/TerminalContext.jsx";
+import {ACTIONS, useTerminal} from "./terminal/TerminalContext.jsx";
 
 const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDown}) => {
 
-  const {state: {listFilterValue, theme}} = useTerminal();
+  const {state: {listFilterValue, theme}, dispatch} = useTerminal();
   const itemRefs = useRef([]);
   const containerRef = useRef(null);
 
@@ -17,6 +17,11 @@ const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDow
       block: 'nearest',
     });
   }, [selectedIndex]);
+
+  const selectItem = (index) => {
+    dispatch({type: ACTIONS.SET_LIST_SELECTED_INDEX, payload: index});
+    onSelectItem({key: 'Enter'}, index)
+  }
 
   return (
       <div
@@ -47,7 +52,7 @@ const TerminalList = ({data, sectionTitle, onSelectItem, selectedIndex, onKeyDow
                 ref={(el) => (itemRefs.current[index] = el)}
                 className={`p-2`}
                 style={{backgroundColor: selectedIndex === index ? theme.selectedItemBgColor : 'transparent'}}
-                onClick={() => onSelectItem({key: 'Enter'})}
+                onClick={() => selectItem(index)}
                 tabIndex={0}>
               {item}
             </div>

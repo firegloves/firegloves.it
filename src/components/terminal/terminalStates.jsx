@@ -95,10 +95,10 @@ export class TerminalListState {
     .filter(item => item.toLowerCase().startsWith(this.listFilterValue.toLowerCase()));
   }
 
-  handleKeyDown = (e) => {
+  handleKeyDown = (e, itemIndex) => {
     handleArrowKeyUpOrDown(e, this.filteredListToShow, this.state.listSelectedIndex, this.dispatch)
-    || handleEnterKeyOnList(e, this.filteredList, this.state.listSelectedIndex, this.handleSelectItem,
-        this.dispatch)
+    || handleEnterKeyOnList(e, this.filteredList, itemIndex || this.state.listSelectedIndex, this.handleSelectItem,
+        this.dispatch, itemIndex)
     || handleEscape(e, this.state, this.dispatch)
     || this.setFilterInputValue(e);
   }
